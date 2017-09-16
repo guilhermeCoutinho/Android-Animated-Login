@@ -18,36 +18,33 @@ import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class FullscreenActivity extends AppCompatActivity implements  View.OnClickListener,
-        ValueAnimator.AnimatorUpdateListener , Animator.AnimatorListener{
+public class FullscreenActivity extends AppCompatActivity implements  View.OnClickListener  {
     enum Scenes {
         BOTH ,
-        FREE,
-        PREMIUM
+        LOGIN,
+        SIGN_UP
     }
-    private final static int FINAL_WEIGHT = 25;
-    private final static int DURATION = 100;
+    private static int TARGET_WEIGHT = 20;
     Scenes showingScene;
     View decorView;
-    LinearLayout free;
-    LinearLayout premium;
-    LinearLayout collapsed;
-    LinearLayout expanded;
-    LinearLayout.LayoutParams collapsed_params;
-    LinearLayout.LayoutParams expanded_params;
+    View login;
+    View signup;
+    View collapsed;
+    View expanded;
     TextView signUptv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         makeFullScreen();
+        UiChangeListener();
         setContentView(R.layout.activity_fullscreen);
         showingScene = Scenes.BOTH;
-        free = (LinearLayout) findViewById(R.id.login_activity_free_Ll);
-        premium = (LinearLayout) findViewById(R.id.login_activity_premium_Ll);
+        login =  findViewById(R.id.login_fragment);
+        signup = findViewById(R.id.signup_fragment);
         signUptv = (TextView) findViewById(R.id.login_activity_signup_tv);
-        free.setOnClickListener(this);
-        premium.setOnClickListener(this);
+        login.setOnClickListener(this);
+        signup.setOnClickListener(this);
         decorView = getWindow().getDecorView();
     }
     /*
@@ -55,89 +52,56 @@ public class FullscreenActivity extends AppCompatActivity implements  View.OnCli
      */
     void makeFullScreen () {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     @Override
     public void onClick(View v) {
-        switchScenes((LinearLayout) v);
+        switchScenes(v);
     }
 
-    void switchScenes (LinearLayout v) {
+    void switchScenes (View v) {
         if (showingScene == getViewType(v))
             return;
         collapsed = v;
-        expanded = v.getId()==free.getId()? premium : free;
-        updateLayoutParams ();
-        animateWeight();
+        expanded = v.getId()==signup.getId()? login : signup;
         showingScene = getViewType(v);
-    }
-
-    boolean wasShowingBoth ;
-    void animateWeight(){
-        ValueAnimator valueAnimator ;
-        valueAnimator = ValueAnimator.ofFloat(expanded_params.weight, FINAL_WEIGHT);
-        valueAnimator.setDuration(DURATION);
-        valueAnimator.setInterpolator(new DecelerateInterpolator(2f));
-        valueAnimator.addUpdateListener(this);
-        valueAnimator.addListener(this);
-        wasShowingBoth = showingScene == Scenes.BOTH;
-        valueAnimator.start();
-    }
-
-    void updateLayoutParams () {
-        collapsed_params =  (LinearLayout.LayoutParams) collapsed.getLayoutParams();
-        expanded_params =  (LinearLayout.LayoutParams) expanded.getLayoutParams();
-
-        float aux = collapsed_params.weight;
-        collapsed_params.weight = expanded_params.weight;
-        expanded_params.weight = aux;
-
-        collapsed.setLayoutParams(collapsed_params);
-        expanded.setLayoutParams(expanded_params);
-    }
-
-    @Override
-    public void onAnimationUpdate(ValueAnimator valueAnimator) {
-        float value = (float) valueAnimator.getAnimatedValue();
-        collapsed_params.weight = value;
-        collapsed.setLayoutParams(collapsed_params);
-        if (!wasShowingBoth){
-            expanded_params.weight = FINAL_WEIGHT+1-value;
-            expanded.setLayoutParams(expanded_params);
-        }
-    }
-
-    @Override
-    public void onAnimationStart(Animator animator) {
-
-    }
-
-    @Override
-    public void onAnimationEnd(Animator animator) {
-        if (showingScene == Scenes.FREE)
-            signUptv.setTextColor( ContextCompat.getColor(this, R.color.dark_text_color));
-        else
-            signUptv.setTextColor( ContextCompat.getColor(this, R.color.light_text_color));
-    }
-
-    @Override
-    public void onAnimationCancel(Animator animator) {
-
-    }
-
-    @Override
-    public void onAnimationRepeat(Animator animator) {
+        LinearLayout.LayoutParams params;
+        params =(LinearLayout.LayoutParams)expanded.getLayoutParams();
+        params.weight = 1;
+        expanded.setLayoutParams(params);
+        params =(LinearLayout.LayoutParams)collapsed.getLayoutParams();
+        params.weight = TARGET_WEIGHT;
+        collapsed.setLayoutParams(params);
 
     }
 
     Scenes getViewType (View v) {
-        if (v.getId()==free.getId())
-            return Scenes.FREE;
-        return Scenes.PREMIUM;
+        if (v.getId()==login.getId())
+            return Scenes.LOGIN;
+        return Scenes.SIGN_UP;
     }
 
-    @Override
+
+    public void UiChangeListener() {
+        final View decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener (new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                    decorView.setSystemUiVisibility(
+                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+                                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+                }
+            }
+        });
+    }
+
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
@@ -150,6 +114,5 @@ public class FullscreenActivity extends AppCompatActivity implements  View.OnCli
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
     }
-
 
 }

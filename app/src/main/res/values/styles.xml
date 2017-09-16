@@ -1,20 +1,40 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="FullscreenTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name = "android:windowActionBar">false</item>
+        <item name = "android:windowNoTitle">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="FullscreenTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name = "android:windowActionBar">false</item>
-        <item name = "android:windowNoTitle">true</item>
-    </style>
-
     <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
         <item name="android:background">@color/black_overlay</item>
     </style>
+
+    <style name="ruler" parent="FullscreenTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">#ebeaeb</item>
+    </style>
+
+    <style name="login_form_item" parent="FullscreenTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#808286</item>
+    </style>
+
+    <style name="input_login_et" parent="login_form_item">
+        <item name="android:background">#f4f3f3</item>
+        <item name="android:textColorHint">#c8c8c8</item>
+        <item name="android:maxLines">1</item>
+    </style>
+    <style name="input_login_btn" parent="login_form_item">
+        <item name="android:background">#e6e5e5</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 
 </resources>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/login_fragment"
+    android:layout_width="match_parent"
+    android:layout_weight="1"
+    android:layout_height="0dp"
+    tools:showIn="@layout/activity_fullscreen">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/background_noise"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LOGIN"
+            android:layout_marginTop="35dp"
+            android:textAlignment="center"
+            android:textColor="@color/dark_text_color"
+            android:textSize="14sp"
+            android:letterSpacing=".3"
+            android:textStyle="bold"
+            />
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/icon1"
+            android:layout_gravity="center"
+            android:layout_marginTop="45dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="FREE ACCOUNT"
+            android:layout_marginTop="35dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:letterSpacing=".1"
+            android:textColor="@color/dark_text_color_secondary"
+            android:textAlignment="center"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Limited feature, slow upload speed"
+            android:layout_marginTop="15dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:letterSpacing=".05"
+            android:textColor="@color/dark_text_color_weak"
+            android:textAlignment="center"
+            />
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingRight="70dp"
+            android:paddingLeft="70dp"
+            android:orientation="vertical"
+            android:layout_marginTop="30dp"
+            >
+            <EditText style="@style/input_login_et"
+                android:hint="Username"
+                android:inputType="textPersonName"/>
+
+            <View style="@style/ruler"/>
+
+            <EditText style="@style/input_login_et"
+                android:hint="Password"
+                android:inputType="textPassword"/>
+
+            <View style="@style/ruler" />
+
+            <Button
+                style="@style/input_login_btn"
+                android:text="LOGIN"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>
