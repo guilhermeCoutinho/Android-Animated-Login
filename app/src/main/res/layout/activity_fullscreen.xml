@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="coutinho.guilherme.animatedloginform.FullscreenActivity"
-    android:id="@+id/decorView"
+    android:id="@+id/rootLayout"
     >
 
     <LinearLayout
@@ -16,5 +16,33 @@
         <include layout="@layout/signup_layout" />
 
     </LinearLayout>
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/activity_fullscreen_switch_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button"
+        android:text="LOGIN"
+        android:layout_marginTop="10dp"
+        android:textColor="#394456"
+        android:minHeight="40dp"
+        android:minWidth="150dp"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/activity_fullscreen_switch_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button_dark"
+        android:text="SIGN UP"
+        android:layout_marginBottom="10dp"
+        android:minHeight="40dp"
+        android:minWidth="150dp"
+        android:textColor="#90949c"
+        android:layout_gravity="center_horizontal|bottom"
+        />
 
 </FrameLayout>

@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/signup_fragment"
     android:layout_width="match_parent"
-    android:layout_weight="20"
+    android:layout_weight="1"
     android:layout_height="0dp"
     tools:showIn="@layout/activity_fullscreen">
 
@@ -13,37 +13,25 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@drawable/background_noise2"
-        android:id="@+id/login_activity_premium_Ll"
-        >
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="SIGN UP"
-            android:layout_marginTop="35dp"
-            android:textAlignment="center"
-            android:textColor="@color/light_text_color"
-            android:textSize="14sp"
-            android:letterSpacing=".3"
-            android:textStyle="bold"
-            />
+        >
 
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:src="@drawable/icon2"
             android:layout_gravity="center"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="75dp"
             />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="PREMIUM ACCOUNT"
-            android:layout_marginTop="45dp"
-            android:textSize="14sp"
+            android:text="SIGN UP"
+            android:layout_marginTop="25dp"
+            android:textSize="22sp"
             android:textStyle="bold"
-            android:letterSpacing=".1"
+            android:letterSpacing=".3"
             android:textColor="@color/light_text_color"
             android:textAlignment="center"
             />
@@ -51,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Full feature, super fast upload speed"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:textSize="14sp"
             android:textStyle="bold"
             android:letterSpacing=".05"
@@ -64,7 +52,7 @@
             android:paddingRight="70dp"
             android:paddingLeft="70dp"
             android:orientation="vertical"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="50dp"
             >
             <EditText style="@style/input_login_et"
                 android:hint="Username"

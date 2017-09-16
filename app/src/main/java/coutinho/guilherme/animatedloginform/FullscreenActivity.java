@@ -2,36 +2,39 @@ package coutinho.guilherme.animatedloginform;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.transition.Scene;
-import android.util.Log;
+import android.transition.TransitionManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-public class FullscreenActivity extends AppCompatActivity implements  View.OnClickListener  {
+public class FullscreenActivity extends AppCompatActivity implements  View.OnClickListener,
+        ValueAnimator.AnimatorUpdateListener , Animator.AnimatorListener{
     enum Scenes {
         BOTH ,
         LOGIN,
         SIGN_UP
     }
-    private static int TARGET_WEIGHT = 20;
+
+    public static long TRANSITION_DURATION = 500;
     Scenes showingScene;
+    ViewGroup rootLayout;
     View decorView;
-    View login;
-    View signup;
+    View loginContainer;
+    View signupContainer;
     View collapsed;
     View expanded;
-    TextView signUptv;
+    LinearLayout.LayoutParams collapsed_params;
+    LinearLayout.LayoutParams expanded_params;
+    Button switchLoginBtn;
+    Button switchSignupBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +43,16 @@ public class FullscreenActivity extends AppCompatActivity implements  View.OnCli
         UiChangeListener();
         setContentView(R.layout.activity_fullscreen);
         showingScene = Scenes.BOTH;
-        login =  findViewById(R.id.login_fragment);
-        signup = findViewById(R.id.signup_fragment);
-        signUptv = (TextView) findViewById(R.id.login_activity_signup_tv);
-        login.setOnClickListener(this);
-        signup.setOnClickListener(this);
+        loginContainer =  findViewById(R.id.login_fragment);
+        signupContainer = findViewById(R.id.signup_fragment);
+        rootLayout = (ViewGroup) findViewById(R.id.rootLayout);
+        switchLoginBtn = (Button) findViewById(R.id.activity_fullscreen_switch_login);
+        switchSignupBtn = (Button) findViewById(R.id.activity_fullscreen_switch_signup);
+
+        switchLoginBtn.setOnClickListener(this);
+        switchSignupBtn.setOnClickListener(this);
+        loginContainer.setOnClickListener(this);
+        signupContainer.setOnClickListener(this);
         decorView = getWindow().getDecorView();
     }
     /*
@@ -58,31 +66,97 @@ public class FullscreenActivity extends AppCompatActivity implements  View.OnCli
 
     @Override
     public void onClick(View v) {
+        if (showingScene != Scenes.BOTH && (v.getId()== signupContainer.getId() || v.getId()== loginContainer.getId()) )
+            return;
         switchScenes(v);
+        updateButtonVisibility();
+    }
+
+    void updateButtonVisibility () {
+       // TransitionManager.beginDelayedTransition(rootLayout);
+        switchSignupBtn.setVisibility(View.GONE);
+        switchLoginBtn.setVisibility(View.GONE);
+        if (showingScene == Scenes.LOGIN)
+            switchSignupBtn.setVisibility(View.VISIBLE);
+        else if (showingScene == Scenes.SIGN_UP)
+            switchLoginBtn.setVisibility(View.VISIBLE);
+    }
+
+    void setContainerReferences (View v) {
+        if (showingScene == Scenes.BOTH) {
+            collapsed = v;
+            expanded = (v.getId()== signupContainer.getId()) ? loginContainer : signupContainer;
+        }else if (showingScene == Scenes.LOGIN){
+            collapsed = signupContainer;
+            expanded = loginContainer;
+        }else {
+            collapsed = loginContainer;
+            expanded = signupContainer;
+        }
     }
 
     void switchScenes (View v) {
         if (showingScene == getViewType(v))
             return;
-        collapsed = v;
-        expanded = v.getId()==signup.getId()? login : signup;
+        setContainerReferences(v);
+        updateLayoutParams();
+        animateWeight();
         showingScene = getViewType(v);
-        LinearLayout.LayoutParams params;
-        params =(LinearLayout.LayoutParams)expanded.getLayoutParams();
-        params.weight = 1;
-        expanded.setLayoutParams(params);
-        params =(LinearLayout.LayoutParams)collapsed.getLayoutParams();
-        params.weight = TARGET_WEIGHT;
-        collapsed.setLayoutParams(params);
+    }
+
+    void updateLayoutParams () {
+        collapsed_params =  (LinearLayout.LayoutParams) collapsed.getLayoutParams();
+        expanded_params =  (LinearLayout.LayoutParams) expanded.getLayoutParams();
+        collapsed.setLayoutParams(collapsed_params);
+        expanded.setLayoutParams(expanded_params);
+    }
+
+    boolean wasShowingBoth ;
+     void animateWeight(){
+        ValueAnimator valueAnimator ;
+        valueAnimator = ValueAnimator.ofFloat(0, 1);
+        valueAnimator.setDuration(TRANSITION_DURATION);
+        valueAnimator.setInterpolator(new LinearInterpolator());
+        valueAnimator.addUpdateListener(this);
+        valueAnimator.addListener(this);
+        wasShowingBoth = showingScene == Scenes.BOTH;
+        valueAnimator.start();
+    }
+
+    @Override
+    public void onAnimationUpdate(ValueAnimator valueAnimator) {
+        float value = (float) valueAnimator.getAnimatedValue();
+        collapsed_params.weight = value;
+        collapsed.setLayoutParams(collapsed_params);
+        expanded_params.weight = 1-value;
+        expanded.setLayoutParams(expanded_params);
+    }
+
+    @Override
+    public void onAnimationStart(Animator animator) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animator animator) {
+
+    }
+
+    @Override
+    public void onAnimationCancel(Animator animator) {
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animator animator) {
 
     }
 
     Scenes getViewType (View v) {
-        if (v.getId()==login.getId())
+        if (v.getId()== switchLoginBtn.getId() || v.getId() == loginContainer.getId())
             return Scenes.LOGIN;
         return Scenes.SIGN_UP;
     }
-
 
     public void UiChangeListener() {
         final View decorView = getWindow().getDecorView();

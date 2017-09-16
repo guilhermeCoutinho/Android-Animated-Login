@@ -15,34 +15,22 @@
         android:background="@drawable/background_noise"
         >
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="LOGIN"
-            android:layout_marginTop="35dp"
-            android:textAlignment="center"
-            android:textColor="@color/dark_text_color"
-            android:textSize="14sp"
-            android:letterSpacing=".3"
-            android:textStyle="bold"
-            />
-
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:src="@drawable/icon1"
             android:layout_gravity="center"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="75dp"
             />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="FREE ACCOUNT"
-            android:layout_marginTop="35dp"
-            android:textSize="14sp"
+            android:text="LOGIN"
+            android:layout_marginTop="25dp"
+            android:textSize="22sp"
             android:textStyle="bold"
-            android:letterSpacing=".1"
+            android:letterSpacing=".3"
             android:textColor="@color/dark_text_color_secondary"
             android:textAlignment="center"
             />
@@ -50,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Limited feature, slow upload speed"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:textSize="14sp"
             android:textStyle="bold"
             android:letterSpacing=".05"
@@ -64,7 +52,7 @@
             android:paddingRight="70dp"
             android:paddingLeft="70dp"
             android:orientation="vertical"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="50dp"
             >
             <EditText style="@style/input_login_et"
                 android:hint="Username"
@@ -74,6 +62,7 @@
 
             <EditText style="@style/input_login_et"
                 android:hint="Password"
+                android:imeOptions="actionDone"
                 android:inputType="textPassword"/>
 
             <View style="@style/ruler" />
