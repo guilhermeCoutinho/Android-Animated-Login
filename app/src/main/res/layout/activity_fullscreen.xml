@@ -17,32 +17,41 @@
 
     </LinearLayout>
 
-    <Button
-        android:visibility="gone"
-        android:id="@+id/activity_fullscreen_switch_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_button"
-        android:text="LOGIN"
-        android:layout_marginTop="10dp"
-        android:textColor="#394456"
-        android:minHeight="40dp"
-        android:minWidth="150dp"
-        android:layout_gravity="center_horizontal"
-        />
 
-    <Button
-        android:visibility="gone"
-        android:id="@+id/activity_fullscreen_switch_signup"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:id="@+id/activity_fullscreen_switch_login"
+        android:visibility="visible"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_button_dark"
-        android:text="SIGN UP"
-        android:layout_marginBottom="10dp"
-        android:minHeight="40dp"
-        android:minWidth="150dp"
-        android:textColor="#90949c"
-        android:layout_gravity="center_horizontal|bottom"
-        />
+        android:layout_gravity="top">
+        <View
+            style="@style/switch_view_background"
+            android:background="#e5e4e4"
+            android:layout_gravity="top"/>
+        <TextView
+            style="@style/switch_view_button"
+            android:background="@drawable/rounded_button"
+            android:text="SIGN UP"
+            android:textColor="#394456"
+            />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/activity_fullscreen_switch_signup"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+        <View
+            style="@style/switch_view_background"
+            android:background="#394456"
+            android:layout_gravity="bottom"/>
+        <TextView
+            style="@style/switch_view_button"
+            android:background="@drawable/rounded_button_dark"
+            android:text="LOGIN"
+            android:textColor="#90949c"
+            />
+    </FrameLayout>
 
 </FrameLayout>

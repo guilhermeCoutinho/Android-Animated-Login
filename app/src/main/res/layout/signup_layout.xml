@@ -47,6 +47,7 @@
             android:textAlignment="center"
             />
         <LinearLayout
+            android:id="@+id/signup_form"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingRight="70dp"
@@ -54,30 +55,29 @@
             android:orientation="vertical"
             android:layout_marginTop="50dp"
             >
-            <EditText style="@style/input_login_et"
-                android:hint="Username"
-                android:inputType="textPersonName"/>
-            <View style="@style/ruler"/>
+                <EditText style="@style/input_login_et"
+                    android:hint="Username"
+                    android:inputType="textPersonName"/>
+                <View style="@style/ruler"/>
 
-            <EditText style="@style/input_login_et"
-                android:hint="Email"
-                android:inputType="textEmailAddress"/>
-            <View style="@style/ruler" />
+                <EditText style="@style/input_login_et"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"/>
+                <View style="@style/ruler" />
 
-            <EditText style="@style/input_login_et"
-                android:hint="Password"
-                android:inputType="textPassword"/>
-            <View style="@style/ruler" />
+                <EditText style="@style/input_login_et"
+                    android:hint="Password"
+                    android:inputType="textPassword"/>
+                <View style="@style/ruler" />
 
-            <EditText style="@style/input_login_et"
-                android:hint="Confirm password"
-                android:inputType="textPassword"/>
-            <View style="@style/ruler" />
+                <EditText style="@style/input_login_et"
+                    android:hint="Confirm password"
+                    android:inputType="textPassword"/>
+                <View style="@style/ruler" />
 
-            <Button
-                style="@style/input_login_btn"
-                android:text="SIGN UP"/>
-
+                <Button
+                    style="@style/input_login_btn"
+                    android:text="SIGN UP"/>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
